@@ -466,6 +466,26 @@ export class NativeHostMainService extends Disposable implements INativeHostMain
 		}
 	}
 
+	async showWindow(windowId: number | undefined, options?: INativeHostOptions): Promise<void> {
+		const win = this.exactWindowById(windowId, options)?.win;
+		if (!win) {
+			return;
+		}
+		if (win.isMinimized()) {
+			win.restore();
+		}
+		win.show();
+		win.focus();
+	}
+
+	async hideWindow(windowId: number | undefined, options?: INativeHostOptions): Promise<void> {
+		this.exactWindowById(windowId, options)?.win?.hide();
+	}
+
+	async setWindowOpacity(windowId: number | undefined, opacity: number, options?: INativeHostOptions): Promise<void> {
+		this.exactWindowById(windowId, options)?.win?.setOpacity(Math.min(1, Math.max(0, opacity)));
+	}
+
 	async updateWindowControls(windowId: number | undefined, options: INativeHostOptions & { height?: number; horizontalInset?: number; backgroundColor?: string; foregroundColor?: string; dimmed?: boolean }): Promise<void> {
 		const window = this.windowById(options?.targetWindowId, windowId);
 		window?.updateWindowControls(options);
