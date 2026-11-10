@@ -69,6 +69,7 @@ export class SessionsChatAccessibilityHelp implements IAccessibleViewImplementat
 
 		const content: string[] = [];
 		content.push(localize('sessionsChat.overview', "You are in the Agents window. The Agents window is a dedicated workspace for working with AI agents. It provides a chat interface, a changes view for reviewing agent-generated changes, a file explorer, and customization options."));
+		content.push(localize('sessionsChat.agentsLauncher', "Use {0} to open the Agents Launcher, a compact new-session composer, from anywhere. Enter starts the session and opens it in the Agents window. Use {1} to start it in the background instead: the composer stays open, with a status that offers Open Session. Escape hides the composer while preserving its draft.", '<keybinding:workbench.action.agentsLauncher>', '<keybinding:workbench.action.agentsLauncher.sendInBackground>'));
 		content.push(getChatInputSessionLinkAccessibilityHelp());
 		if (!accessor.get(IChatEntitlementService).sentiment.hidden && configurationService.getValue<boolean>('chat.disableAIFeatures') !== true) {
 			content.push(localize('sessionsChat.remoteConnections.renameHelp', "In the Remote Connections menu, press Tab to reach the name link in the footer, then Enter or Space to rename the shared environment. The input starts with the current name. Enter saves the name shown on other clients, and Escape cancels. Shift+Tab returns to the connection options. Renaming while Off does not enable sharing."));
