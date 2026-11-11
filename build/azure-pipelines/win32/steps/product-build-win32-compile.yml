@@ -75,6 +75,11 @@ steps:
         vscodePlatform: win32
         VSCODE_PRIVILEGED_CONNECTIONS: ${{ parameters.VSCODE_PRIVILEGED_CONNECTIONS }}
 
+  # TEMPORARY validation of the network failure diagnostics (microsoft/vscode-engineering#4433). Do not merge.
+  - pwsh: |
+      Write-Host "##vso[task.logissue type=error]Injected failure to validate the network failure diagnostics."
+      exit 1
+    displayName: "TEMPORARY: injected failure"
   - template: ../../common/mixin-vscode-capi.yml@self
 
   - powershell: pnpm run gulp core-ci
