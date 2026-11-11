@@ -75,6 +75,12 @@ steps:
         vscodePlatform: win32
         VSCODE_PRIVILEGED_CONNECTIONS: ${{ parameters.VSCODE_PRIVILEGED_CONNECTIONS }}
 
+  # TEMPORARY validation of the network failure diagnostics (microsoft/vscode-engineering#4433). Do not merge.
+  - pwsh: |
+      $listeners = @(Get-Process -Name EtwNetworkEventListener -ErrorAction SilentlyContinue)
+      Write-Host "Stopping $($listeners.Count) Network Isolation listener process(es): $($listeners.Id -join ', ')"
+      $listeners | Stop-Process -Force
+    displayName: "TEMPORARY: stop the Network Isolation listener"
   - template: ../../common/mixin-vscode-capi.yml@self
 
   - powershell: pnpm run gulp core-ci
